@@ -31,13 +31,13 @@
             background: white;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            padding: 40px 30px;
+            padding: 40px 20px;
             text-align: center;
         }
 
         .logo {
             font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             color: #2c3e50;
             margin-bottom: 10px;
         }
@@ -45,32 +45,41 @@
         .tagline {
             font-weight: 300;
             color: #7f8c8d;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             font-style: italic;
+            font-size: 0.95rem;
         }
 
         h1 {
             color: #2c3e50;
             margin-bottom: 20px;
             font-weight: 600;
+            font-size: 1.5rem;
         }
 
         p.lead {
-            font-size: 1.1rem;
-            margin-bottom: 30px;
+            font-size: 1rem;
+            margin-bottom: 25px;
             color: #555;
+            line-height: 1.5;
         }
 
         .stars-container {
-            margin: 30px 0;
-            font-size: 3rem;
+            margin: 25px 0;
+            font-size: 2.8rem;
             cursor: pointer;
+            display: flex;
+            justify-content: center;
+            flex-wrap: nowrap;
+            gap: 8px;
+            padding: 0 10px;
         }
 
         .star {
             color: #ecf0f1;
             transition: color 0.2s ease, transform 0.2s ease;
-            margin: 0 5px;
+            flex-shrink: 0;
+            min-width: 45px;
         }
 
         .star:hover {
@@ -79,11 +88,11 @@
         }
 
         .loading-message {
-            margin: 25px 0;
-            padding: 15px;
+            margin: 20px 0;
+            padding: 12px;
             border-radius: 5px;
             font-weight: 600;
-            min-height: 60px;
+            min-height: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -92,6 +101,7 @@
             background-color: #d5f4e6;
             color: #27ae60;
             border: 1px solid #27ae60;
+            font-size: 0.9rem;
         }
 
         .loading-message.show {
@@ -99,10 +109,57 @@
         }
 
         footer {
-            margin-top: 30px;
-            font-size: 0.8rem;
+            margin-top: 25px;
+            font-size: 0.75rem;
             color: #95a5a6;
             text-align: center;
+            padding: 0 10px;
+        }
+
+        /* Mobile-specific optimizations */
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 15px;
+                margin: 10px;
+            }
+            
+            .logo {
+                font-size: 2rem;
+            }
+            
+            h1 {
+                font-size: 1.3rem;
+                margin-bottom: 15px;
+            }
+            
+            .stars-container {
+                font-size: 2.5rem;
+                gap: 6px;
+            }
+            
+            .star {
+                min-width: 40px;
+            }
+            
+            p.lead {
+                font-size: 0.95rem;
+                margin-bottom: 20px;
+            }
+        }
+
+        @media (max-width: 375px) {
+            .stars-container {
+                font-size: 2.2rem;
+                gap: 4px;
+            }
+            
+            .star {
+                min-width: 35px;
+            }
+            
+            .logo {
+                font-size: 1.8rem;
+            }
         }
     </style>
 </head>
@@ -136,13 +193,13 @@
         const stars = document.querySelectorAll('.star');
         const loadingMessage = document.getElementById('loadingMessage');
 
-        // Define links for each rating
+        // Define links for each rating - UPDATED 4 & 5 STAR LINKS
         const ratingLinks = {
             1: "mailto:info@graustarklaundry.com?subject=Feedback%20-%201%20Star%20Rating",
             2: "mailto:info@graustarklaundry.com?subject=Feedback%20-%202%20Star%20Rating",
             3: "mailto:info@graustarklaundry.com?subject=Feedback%20-%203%20Star%20Rating",
-            4: "https://www.google.com/search?q=laundromat+houston&oq=&gs_lcrp=EgZjaHJvbWUqCQgBEEUYOxjCAzIJCAAQRRg7GMIDMgkIARBFGDsYwgMyCQgCEEUYOxjCAzIJCAMQRRg7GMIDMgkIBBBFGDsYwgMyCQgFEEUYOxjCAzIJCAYQRRg7GMIDMgkIBxBFGDsYwgPSAQozOTU5NjZqMGo3qAIIsAIB8QUNLrGo295iDw&sourceid=chrome&ie=UTF-8&lqi=ChJsYXVuZHJvbWF0IGhvdXN0b25I_I7zwOeAgIAIWhgQABgBIhJsYXVuZHJvbWF0IGhvdXN0b26SAQpsYXVuZHJvbWF0mgEjQ2haRFNVaE5NRzluUzBWSlEwRm5TVU16YmkweVIxQlJFQUWqAUsQASoOIgpsYXVuZHJvbWF0KAAyHxABIhtQKUqm80Px_7TIeZyMjniMek4LWyG_C70PRh4yFhACIhJsYXVuZHJvbWF0IGhvdXN0b27gAQD6AQQIQRA5#lkt=LocalPoiReviews&rlimm=13484141915965182180&lrd=0x8640c08211ec2fb9:0xbb214ba16a0f50e4,3,,,,",
-            5: "https://www.google.com/search?q=laundromat+houston&oq=&gs_lcrp=EgZjaHJvbWUqCQgBEEUYOxjCAzIJCAAQRRg7GMIDMgkIARBFGDsYwgMyCQgCEEUYOxjCAzIJCAMQRRg7GMIDMgkIBBBFGDsYwgMyCQgFEEUYOxjCAzIJCAYQRRg7GMIDMgkIBxBFGDsYwgPSAQozOTU5NjZqMGo3qAIIsAIB8QUNLrGo295iDw&sourceid=chrome&ie=UTF-8&lqi=ChJsYXVuZHJvbWF0IGhvdXN0b25I_I7zwOeAgIAIWhgQABgBIhJsYXVuZHJvbWF0IGhvdXN0b26SAQpsYXVuZHJvbWF0mgEjQ2haRFNVaE5NRzluUzBWSlEwRm5TVU16YmkweVIxQlJFQUWqAUsQASoOIgpsYXVuZHJvbWF0KAAyHxABIhtQKUqm80Px_7TIeZyMjniMek4LWyG_C70PRh4yFhACIhJsYXVuZHJvbWF0IGhvdXN0b27gAQD6AQQIQRA5#lkt=LocalPoiReviews&rlimm=13484141915965182180&lrd=0x8640c08211ec2fb9:0xbb214ba16a0f50e4,3,,,,"
+            4: "https://www.google.com/search?hl=en-US&gl=us&q=Graustark+Laundry-NEW+MANAGEMENT+SEP+2024,+4506+Graustark+St,+Houston,+TX+77006&ludocid=13484141915965182180&lsig=AB86z5XGRygOjvmvao0WSegYSpK1&source=g.page.m._&laa=merchant-review-solicitation&pli=1#lrd=0x8640c08211ec2fb9:0xbb214ba16a0f50e4,3",
+            5: "https://www.google.com/search?hl=en-US&gl=us&q=Graustark+Laundry-NEW+MANAGEMENT+SEP+2024,+4506+Graustark+St,+Houston,+TX+77006&ludocid=13484141915965182180&lsig=AB86z5XGRygOjvmvao0WSegYSpK1&source=g.page.m._&laa=merchant-review-solicitation&pli=1#lrd=0x8640c08211ec2fb9:0xbb214ba16a0f50e4,3"
         };
 
         stars.forEach(star => {
